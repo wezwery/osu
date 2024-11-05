@@ -57,6 +57,9 @@ namespace osu.Game.Rulesets.Osu.Mods
         [SettingSource("Metronome ticks", "Whether a metronome beat should play in the background")]
         public Bindable<bool> Metronome { get; } = new BindableBool(true);
 
+        [SettingSource("Modern metronome sounds", "Use a modern metronome beat.")]
+        public BindableBool UseModernMetronome { get; } = new BindableBool(false);
+
         #region Constants
 
         /// <summary>
@@ -336,7 +339,7 @@ namespace osu.Game.Rulesets.Osu.Mods
         public void ApplyToDrawableRuleset(DrawableRuleset<OsuHitObject> drawableRuleset)
         {
             if (Metronome.Value)
-                drawableRuleset.Overlays.Add(new MetronomeBeat(drawableRuleset.Beatmap.HitObjects.First().StartTime));
+                drawableRuleset.Overlays.Add(new MetronomeBeat(drawableRuleset.Beatmap.HitObjects.First().StartTime, UseModernMetronome.Value));
         }
 
         #endregion

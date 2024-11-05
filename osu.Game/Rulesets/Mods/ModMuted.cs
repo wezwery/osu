@@ -42,6 +42,9 @@ namespace osu.Game.Rulesets.Mods
         [SettingSource("Enable metronome", "Add a metronome beat to help you keep track of the rhythm.")]
         public BindableBool EnableMetronome { get; } = new BindableBool(true);
 
+        [SettingSource("Use modern metronome", "Use a modern metronome beat.")]
+        public BindableBool UseModernMetronome { get; } = new BindableBool(false);
+
         [SettingSource("Final volume at combo", "The combo count at which point the track reaches its final volume.", SettingControlType = typeof(SettingsSlider<int, MuteComboSlider>))]
         public BindableInt MuteComboCount { get; } = new BindableInt(100)
         {
@@ -69,7 +72,7 @@ namespace osu.Game.Rulesets.Mods
                 MetronomeBeat metronomeBeat;
 
                 // Importantly, this is added to FrameStableComponents and not Overlays as the latter would cause it to be self-muted by the mod's volume adjustment.
-                drawableRuleset.FrameStableComponents.Add(metronomeBeat = new MetronomeBeat(drawableRuleset.Beatmap.HitObjects.First().StartTime));
+                drawableRuleset.FrameStableComponents.Add(metronomeBeat = new MetronomeBeat(drawableRuleset.Beatmap.HitObjects.First().StartTime, UseModernMetronome.Value));
 
                 metronomeBeat.AddAdjustment(AdjustableProperty.Volume, metronomeVolumeAdjust);
             }
