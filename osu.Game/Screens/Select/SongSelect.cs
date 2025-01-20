@@ -378,6 +378,7 @@ namespace osu.Game.Screens.Select
 
                 BeatmapOptions.AddButton(@"Manage", @"collections", FontAwesome.Solid.Book, colours.Green, () => manageCollectionsDialog?.Show());
                 BeatmapOptions.AddButton(@"Delete", @"all difficulties", FontAwesome.Solid.Trash, colours.Pink, () => DeleteBeatmap(Beatmap.Value.BeatmapSetInfo));
+                BeatmapOptions.AddButton(@"Delete", @"filtered beatmaps", FontAwesome.Solid.Trash, colours.Pink, DeleteVisibleBeatmaps);
                 BeatmapOptions.AddButton(@"Mark", @"as played", FontAwesome.Regular.TimesCircle, colours.Purple, () => beatmaps.MarkPlayed(Beatmap.Value.BeatmapInfo));
                 BeatmapOptions.AddButton(@"Clear", @"local scores", FontAwesome.Solid.Eraser, colours.Purple, () => ClearScores(Beatmap.Value.BeatmapInfo));
             }
@@ -1033,6 +1034,14 @@ namespace osu.Game.Screens.Select
             if (beatmap == null) return;
 
             dialogOverlay?.Push(new BeatmapDeleteDialog(beatmap));
+        }
+
+        /// <summary>
+        /// Request to delete all visible beatmaps.
+        /// </summary>
+        public void DeleteVisibleBeatmaps()
+        {
+            dialogOverlay?.Push(new BeatmapsDeleteDialog(Carousel.VisibleBeatmapSets.ToList()));
         }
 
         /// <summary>

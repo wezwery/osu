@@ -121,6 +121,8 @@ namespace osu.Game.Screens.Select
 
         internal IEnumerable<BeatmapSetInfo> BeatmapSets => beatmapSets.Select(g => g.BeatmapSet);
 
+        internal IEnumerable<BeatmapSetInfo> VisibleBeatmapSets => beatmapSets.Where(s => !s.Filtered.Value).Select(g => g.BeatmapSet);
+
         private void loadNewRoot()
         {
             beatmapsSplitOut = activeCriteria.SplitOutDifficulties;
